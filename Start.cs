@@ -111,7 +111,7 @@ namespace nvQuickSite
         private void GetOnlineVersion()
         {
             if (cboProductName.SelectedItem == null || cboProductVersion.SelectedItem == null) { return; }
-            var package = Packages.FirstOrDefault(p => p.pid == ((ComboItem)cboProductName.SelectedItem).Value && p.version == cboProductVersion.SelectedText);
+            var package = Packages.FirstOrDefault(p => p.pid == ((ComboItem)cboProductName.SelectedItem).Value && p.version == ((ComboItem)cboProductVersion.SelectedItem).Value);
 
             WebClient client = new WebClient();
             client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
@@ -159,7 +159,7 @@ namespace nvQuickSite
 
         void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            var package = Packages.FirstOrDefault(p => p.pid == Convert.ToString(cboProductName.SelectedValue) && p.version == cboProductVersion.SelectedText);
+            var package = Packages.FirstOrDefault(p => p.pid == ((ComboItem)cboProductName.SelectedItem).Value && p.version == ((ComboItem)cboProductVersion.SelectedItem).Value);
             var fileName = package.url.Split('/').Last();
             txtLocalInstallPackage.Text = Directory.GetCurrentDirectory() + @"\Downloads\" + fileName;
             Properties.Settings.Default.LocalInstallPackageRecent = Directory.GetCurrentDirectory() + @"\Downloads\";
